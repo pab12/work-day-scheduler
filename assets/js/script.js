@@ -8,7 +8,7 @@ dateEl.innerHTML = currentDate;
 function timeOfDay() {
     $("textarea").each(function(){
         var timeBlock = parseInt($(this).attr("hour"));
-        // console.log(timeBlock);
+        
         if(timeBlock < currentHour){
             $(this).addClass("past")
         } else if (timeBlock === currentHour) {
@@ -17,5 +17,24 @@ function timeOfDay() {
             $(this).addClass("future")
         }
     })
-}; 
+}; // save the value of the specific time block when clicked on
+$(".saveBtn").on("click", function(){
+   var textValue=  $(this).siblings("textarea").val();
+   var timeValue = $(this).siblings("textarea").attr("hour");
+   console.log(timeValue);
+   console.log(textValue);
+
+   localStorage.setItem(timeValue, textValue)
+});
+
+// display each task when first appearing on page or refreshing
+function getStoreVal() {
+    var array = [9, 10, 11, 12];
+    array.forEach(function(e){
+        $("textarea[hour='" + e + "']").val(localStorage.getItem(e))
+    })
+};
+
+
 timeOfDay();
+getStoreVal();
